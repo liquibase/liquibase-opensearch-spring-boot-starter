@@ -10,6 +10,7 @@ permissions:
   contents: write # Required to create and update releases
   id-token: write # Required for OIDC authentication
 
+
 jobs:
   dry-run-attach-artifact-to-release:
     uses: liquibase/build-logic/.github/workflows/extension-attach-artifact-release.yml@main
