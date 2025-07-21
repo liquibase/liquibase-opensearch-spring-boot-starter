@@ -22,6 +22,7 @@ jobs:
     secrets: inherit
     with:
       java: "[ 17, 21 ]"
+      runIntegrationTests: true
 
   dependabot:
     needs: build-test
