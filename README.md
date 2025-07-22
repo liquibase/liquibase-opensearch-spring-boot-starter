@@ -11,15 +11,15 @@ integration here instead.
 This starter requires that an [`OpenSearchClient`][opensearch-java-client] is available as a bean. It is generally
 recommended that you use [`spring-data-opensearch-starter`] to create this bean, however you can also provide your own.
 
-Unlike `liquibase-opensearch` this will not attempt to create its own `OpenSearchClient` and consequently it does not
+Unlike `liquibase-opensearch`, this will not attempt to create its own `OpenSearchClient` and consequently it does not
 try to read any OpenSearch connection information from the properties.
 
-Once you include this library as a dependency in your project it will automatically trigger the liquibase migration,
+Once you include this library as a dependency in your project, it will automatically trigger the liquibase migration,
 unless you set `opensearch.liquibase.enabled` to `false`.
 By default, the integration will look for a changelog file at `db/changelog/db.changelog-master.yaml`.
 
-Note that the standard Liquibase Spring integration will also be triggered automatically, thus you have to disable it
-unless you have other databases besides OpenSearch for which you intend to use Liquibase as normally. To disable it
+Note that the standard Liquibase Spring integration will also be triggered automatically, thus you have to disable it,
+unless you have other databases besides OpenSearch, for which you intend to use Liquibase as normally. To disable it,
 specify the following Spring configuration:
 ```yaml
 spring.liquibase.enabled=false
