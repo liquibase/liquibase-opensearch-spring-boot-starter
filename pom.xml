@@ -17,7 +17,7 @@
 
 
     <description>Liquibase extension to manage changesets for OpenSearch.</description>
-    <url>https://github.com/liquibase/liquibase-opensearch-springboot-starter</url>
+    <url>https://github.com/liquibase/liquibase-opensearch-spring-boot-starter</url>
 
     <licenses>
         <license>
