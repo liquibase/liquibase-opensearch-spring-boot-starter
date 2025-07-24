@@ -43,7 +43,7 @@
 
     <properties>
         <liquibase.version>4.33.0</liquibase.version>
-        <spring-boot.version>3.5.3</spring-boot.version>
+        <spring-boot.version>3.5.4</spring-boot.version>
         <spring-data-opensearch.version>1.8.1</spring-data-opensearch.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
