@@ -20,3 +20,4 @@ jobs:
     secrets: inherit
     with:
       languages: '["java"]'
+      javaBuildVersion: 21
