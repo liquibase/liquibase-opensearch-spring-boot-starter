@@ -6,11 +6,13 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 import java.util.Map;
 
 /**
- * @param enabled         Defines whether the liquibase OpenSearch integration is enabled. Has no impact on other liquibase or OpenSearch integrations.
- * @param changelogFile   Path to the liquibase changelog file (must be on the classpath).
- * @param contexts        Context filter to be used.
- * @param parameters      Change log parameters.
- * @param labelFilterArgs Label filter to be used.
+ * @param enabled                    Defines whether the liquibase OpenSearch integration is enabled. Has no impact on other liquibase or OpenSearch integrations.
+ * @param changelogFile              Path to the liquibase changelog file (must be on the classpath).
+ * @param contexts                   Context filter to be used.
+ * @param parameters                 Change log parameters.
+ * @param labelFilterArgs            Label filter to be used.
+ * @param databaseChangeLogIndex     Name of the OpenSearch index in which the liquibase changelog is stored
+ * @param databaseChangeLogLockIndex Name of the OpenSearch index in which the liquibase changelog lock is stored
  */
 @ConfigurationProperties("opensearch.liquibase")
 public record SpringLiquibaseOpenSearchProperties(
@@ -24,6 +26,12 @@ public record SpringLiquibaseOpenSearchProperties(
 
         Map<String, String> parameters,
 
-        String labelFilterArgs
+        String labelFilterArgs,
+
+        @DefaultValue("databasechangelog")
+        String databaseChangeLogIndex,
+
+        @DefaultValue("databasechangeloglock")
+        String databaseChangeLogLockIndex
 ) {
 }

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+* Allow changing the index names for the liquibase-internal indices (defaults: `databasechangelog` and `databasechangeloglock`)
+
 ### Changed
 
 * Updated to `spring-data-opensearch` v2 & `opensearch-java` v3 - this is a breaking change for consumers!
