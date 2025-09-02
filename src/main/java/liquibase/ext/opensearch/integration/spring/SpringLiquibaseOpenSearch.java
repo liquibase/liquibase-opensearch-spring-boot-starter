@@ -79,6 +79,8 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
                     ConnectionServiceFactory.getInstance().register(connection);
                     final var database = new OpenSearchLiquibaseDatabase();
                     database.setConnection(connection);
+                    database.setDatabaseChangeLogTableName(this.properties.databaseChangeLogIndex());
+                    database.setDatabaseChangeLogLockTableName(this.properties.databaseChangeLogLockIndex());
                     DatabaseFactory.getInstance().register(database);
                     final var changeLogParameters = new ChangeLogParameters(database);
                     if (properties.parameters() != null) {

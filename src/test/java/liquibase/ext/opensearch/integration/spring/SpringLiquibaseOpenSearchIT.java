@@ -1,7 +1,6 @@
 package liquibase.ext.opensearch.integration.spring;
 
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.testcontainers.OpenSearchContainer;
@@ -56,6 +55,13 @@ class SpringLiquibaseOpenSearchIT {
                         .match(m -> m
                                 .field("testfield")
                                 .query(q2 -> q2.stringValue("foobar"))))).count());
+    }
+
+    @Test
+    @SneakyThrows
+    void itUsesTheDefaultChangelogIndexNames() {
+        assertTrue(openSearchClient.indices().exists(e -> e.index("databasechangelog")).value());
+        assertTrue(openSearchClient.indices().exists(e -> e.index("databasechangeloglock")).value());
     }
 
 }
