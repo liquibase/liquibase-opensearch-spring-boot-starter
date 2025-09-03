@@ -8,6 +8,8 @@ integration here instead.
 
 ## Usage
 
+To use this in your java project, add a dependency to `org.liquibase.ext:liquibase-opensearch-spring-boot-starter`.
+
 This starter requires that an [`OpenSearchClient`][opensearch-java-client] is available as a bean. It is generally
 recommended that you use [`spring-data-opensearch-starter`] to create this bean, however you can also provide your own.
 
@@ -25,6 +27,8 @@ specify the following Spring configuration:
 spring.liquibase.enabled=false
 ```
 
+See the [properties record] for all supported configuration options.
+
 See the [`liquibase-opensearch`] documentation for further details on the supported change types for OpenSearch.
 
 ## OpenSearch Compatibility
@@ -33,7 +37,7 @@ Please refer to [`liquibase-opensearch`] to see the current compatibility.
 
 ## Versioning
 
-This project follows the [spring boot release cycle] and thus **does not** adhere to [Semantic Versioning].
+This project follows the [Spring Boot release cycle] and thus **does not** adhere to [Semantic Versioning].
 
 ## Changelog
 For the changelog please see the dedicated [CHANGELOG.md](CHANGELOG.md).
@@ -46,6 +50,7 @@ This project is licensed under the Apache License Version 2.0 - see the [LICENSE
 [Liquibase Spring Boot integration]: https://contribute.liquibase.com/extensions-integrations/directory/integration-docs/springboot/
 [opensearch-java-client]: https://docs.opensearch.org/docs/latest/clients/java/
 [`spring-data-opensearch-starter`]: https://github.com/opensearch-project/spring-data-opensearch/tree/main?tab=readme-ov-file#spring-boot-integration
-[spring boot release cycle]: https://github.com/spring-projects/spring-boot/wiki/Supported-Versions
+[properties record]: src/main/java/liquibase/ext/opensearch/integration/spring/SpringLiquibaseOpenSearchProperties.java
+[Spring Boot release cycle]: https://github.com/spring-projects/spring-boot/wiki/Supported-Versions
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
 [LICENSE]: LICENSE
