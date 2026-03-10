@@ -74,7 +74,7 @@
         <dependency>
             <groupId>org.opensearch.client</groupId>
             <artifactId>opensearch-java</artifactId>
-            <version>3.2.0</version>
+            <version>3.7.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.opensearch.client</groupId>
@@ -125,6 +125,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.42</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency> <!-- temporary: force a newer version due to httpclient5 dependency; can be removed with update to next major of the SB starter -->
+            <groupId>org.opensearch.client</groupId>
+            <artifactId>opensearch-rest-client</artifactId>
+            <version>3.5.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.opensearch.client</groupId>
