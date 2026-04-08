@@ -129,7 +129,7 @@
         <dependency> <!-- temporary: force a newer version due to httpclient5 dependency; can be removed with update to next major of the SB starter -->
             <groupId>org.opensearch.client</groupId>
             <artifactId>opensearch-rest-client</artifactId>
-            <version>3.5.0</version>
+            <version>3.6.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
