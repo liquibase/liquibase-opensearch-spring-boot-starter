@@ -19,7 +19,7 @@ import liquibase.ui.UIServiceEnum;
 import lombok.Getter;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
+import org.springframework.boot.liquibase.autoconfigure.LiquibaseProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

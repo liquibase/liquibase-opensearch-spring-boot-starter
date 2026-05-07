@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+This version is compatible with Spring Boot 4.0.x.
+
+### Breaking Changes
+
+* Updated to `liquibase-opensearch:2.0.0`
+* Updated to Liquibase 5
+  * Note the [license change on Liquibase itself][lb-license]. The license of `liquibase-opensearch` and
+    `liquibase-opensearch-spring-boot-starter` remain unchanged (ALv2)
+* Updated to Spring Boot 4.0
+
 ## [0.2.1] - 2026-05-28
 
 This version is compatible with Spring Boot 3.5.x.
@@ -37,3 +47,4 @@ This version is compatible with Spring Boot 3.5.x.
 [0.2.1]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v0.0.1...v0.1.0
+[lb-license]: https://www.liquibase.com/blog/liquibase-community-for-the-future-fsl
