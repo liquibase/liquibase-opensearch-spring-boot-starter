@@ -84,9 +84,7 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
                     DatabaseFactory.getInstance().register(database);
                     final var changeLogParameters = new ChangeLogParameters(database);
                     if (properties.parameters() != null) {
-                        for (var e : properties.parameters().entrySet()) {
-                            changeLogParameters.set(e.getKey(), e.getValue());
-                        }
+                        properties.parameters().forEach(changeLogParameters::set);
                     }
 
                     new CommandScope(UpdateCommandStep.COMMAND_NAME)
