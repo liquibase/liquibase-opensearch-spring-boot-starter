@@ -1,6 +1,6 @@
 # Liquibase Extension for OpenSearch: Spring Boot Starter
 
-This is the [Spring Boot] starter for [liquibase-opensearch], which allows you to easily use Liquibase with OpenSearch
+This is the [Spring Boot] starter for [`liquibase-opensearch`], which allows you to easily use Liquibase with OpenSearch
 clusters in Spring Boot.
 
 Note that the standard [Liquibase Spring Boot integration] does *not* work with OpenSearch. You have to use this
