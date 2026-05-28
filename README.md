@@ -39,6 +39,9 @@ Please refer to [`liquibase-opensearch`] to see the current compatibility.
 
 This project follows the [Spring Boot release cycle] and thus **does not** adhere to [Semantic Versioning].
 
+Version 1.0.x is compatible with Spring Boot 4.0.x, major/minor versions increment accordingly from there on out
+(i.e. 1.1.x will be compatible with 4.1.x, etc.).
+
 ## Changelog
 For the changelog please see the dedicated [CHANGELOG.md](CHANGELOG.md).
 
