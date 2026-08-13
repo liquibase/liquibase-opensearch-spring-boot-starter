@@ -23,6 +23,10 @@ jobs:
     with:
       java: "[ 21 ]"
       javaBuildVersion: 21
+      # The integration tests start OpenSearch via testcontainers, which needs a
+      # Docker daemon. GitHub's windows-latest runners have none, so every IT
+      # errors with "Could not find a valid Docker environment" there.
+      os: '["ubuntu-latest"]'
       runIntegrationTests: true
 
   dependabot:
