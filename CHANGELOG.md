@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This version is compatible with Spring Boot 4.1.x.
 
+### Changed
+* Updated to `liquibase-opensearch:2.1.1`
+
 ## [1.1.1] - 2026-09-03
 
 ### Changed
