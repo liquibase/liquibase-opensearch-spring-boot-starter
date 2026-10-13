@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [1.1.2] - 2026-10-13
+
 This version is compatible with Spring Boot 4.1.x.
 
 ### Changed
@@ -67,8 +69,9 @@ This version is compatible with Spring Boot 3.5.x.
 * Updated to `spring-data-opensearch` v2 & `opensearch-java` v3 - this is a breaking change for consumers!
   * Require JDK 21 as a minimum due to this update
 
-[Unreleased]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v1.2.0...HEAD
-[1.2.0]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v1.1.0...v1.2.0
+[Unreleased]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v0.2.1...v1.0.0
 [0.2.1]: https://github.com/liquibase/liquibase-opensearch-spring-boot-starter/compare/v0.2.0...v0.2.1
