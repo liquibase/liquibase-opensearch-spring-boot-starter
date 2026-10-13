@@ -21,7 +21,7 @@ databaseChangeLog:
               }
         - httpRequest:
             method: PUT
-            path: /testindex/_doc/testdoc
+            path: /testindex/_doc/testdoc?refresh=true
             body: >
               {
                 "testfield": "${test-value}"
