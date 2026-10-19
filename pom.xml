@@ -45,8 +45,7 @@
         <liquibase.version>5.0.4</liquibase.version>
         <spring-boot.version>4.1.2</spring-boot.version>
         <spring-data-opensearch.version>3.1.2</spring-data-opensearch.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         <sonar.organization>liquibase</sonar.organization>
         <sonar.projectKey>${sonar.organization}_${project.artifactId}</sonar.projectKey>
         <sonar.projectName>${project.name}</sonar.projectName>
