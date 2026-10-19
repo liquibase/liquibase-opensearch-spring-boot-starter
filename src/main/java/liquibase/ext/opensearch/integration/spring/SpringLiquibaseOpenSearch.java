@@ -9,8 +9,6 @@ import liquibase.command.core.UpdateCommandStep;
 import liquibase.command.core.helpers.DatabaseChangelogCommandStep;
 import liquibase.command.core.helpers.DbUrlConnectionArgumentsCommandStep;
 import liquibase.command.core.helpers.ShowSummaryArgument;
-import liquibase.database.ConnectionServiceFactory;
-import liquibase.database.DatabaseFactory;
 import liquibase.ext.opensearch.database.OpenSearchConnection;
 import liquibase.ext.opensearch.database.OpenSearchLiquibaseDatabase;
 import liquibase.integration.IntegrationDetails;
@@ -72,14 +70,12 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
         Scope.child(scopeVars,
                 () -> {
                     // we want to re-use the connection which spring-data-opensearch (or somebody else) already constructed
-                    // => do not rely on liquibase' standard mechanism of constructing a new connection, instead we force it to take our own.
+                    // => do not rely on liquibase' standard mechanism of constructing a new connection, instead we pass our own database.
                     final var connection = new OpenSearchConnection(openSearchClient);
-                    ConnectionServiceFactory.getInstance().register(connection);
                     final var database = new OpenSearchLiquibaseDatabase();
                     database.setConnection(connection);
                     database.setDatabaseChangeLogTableName(this.properties.databaseChangeLogIndex());
                     database.setDatabaseChangeLogLockTableName(this.properties.databaseChangeLogLockIndex());
-                    DatabaseFactory.getInstance().register(database);
                     try {
                         final var changeLogParameters = new ChangeLogParameters(database);
                         if (properties.parameters() != null) {

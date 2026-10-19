@@ -16,6 +16,8 @@ This project follows the Spring Boot release cycle and thus does *not* adhere to
 ### Fixed
 
 * The connection is now also closed if the migration fails
+* The connection and database are no longer registered globally in Liquibase, which leaked an instance on every
+  application context start
 
 ## [1.1.2] - 2026-10-13
 
