@@ -59,7 +59,9 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
         scopeVars.put(Scope.Attr.ui.name(), this.uiService.getUiServiceClass().getDeclaredConstructor().newInstance());
         scopeVars.put(Scope.Attr.integrationDetails.name(), new IntegrationDetails("liquibase-opensearch-spring-boot-starter"));
 
-        scopeVars.put(AnalyticsArgs.ENABLED.getKey(), this.liquibaseProperties.getAnalyticsEnabled());
+        if (this.liquibaseProperties.getAnalyticsEnabled() != null) {
+            scopeVars.put(AnalyticsArgs.ENABLED.getKey(), this.liquibaseProperties.getAnalyticsEnabled());
+        }
         scopeVars.put(Scope.Attr.maxAnalyticsCacheSize.name(), 10);
 
         if (this.liquibaseProperties.getLicenseKey() != null) {
