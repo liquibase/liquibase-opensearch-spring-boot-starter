@@ -17,7 +17,7 @@ import java.util.Map;
 @ConfigurationProperties("opensearch.liquibase")
 public record SpringLiquibaseOpenSearchProperties(
         @DefaultValue("true")
-        Boolean enabled,
+        boolean enabled,
 
         @DefaultValue("db/changelog/db.changelog-master.yaml")
         String changelogFile,
