@@ -9,12 +9,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.liquibase.autoconfigure.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.sql.init.dependency.DatabaseInitializationDependencyConfigurer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportRuntimeHints;
 
 @AutoConfiguration(afterName = "org.opensearch.spring.boot.autoconfigure.OpenSearchClientAutoConfiguration")
 @ConditionalOnClass(OpenSearchClient.class)
 @EnableConfigurationProperties({SpringLiquibaseOpenSearchProperties.class, LiquibaseProperties.class})
+@Import(DatabaseInitializationDependencyConfigurer.class)
 @ImportRuntimeHints(LiquibaseOpenSearchAutoConfiguration.LiquibaseAutoConfigurationRuntimeHints.class)
 public class LiquibaseOpenSearchAutoConfiguration {
     @Bean

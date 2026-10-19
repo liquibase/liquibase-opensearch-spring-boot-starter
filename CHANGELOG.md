@@ -7,6 +7,10 @@ This project follows the Spring Boot release cycle and thus does *not* adhere to
 
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+* Beans annotated with `@DependsOnDatabaseInitialization` are now only created after the migration has run
+
 ### Changed
 
 * `SpringLiquibaseOpenSearch` is no longer annotated with `@Component`, it is only created by the auto-configuration

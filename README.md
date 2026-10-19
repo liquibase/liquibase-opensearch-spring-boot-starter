@@ -22,6 +22,10 @@ Once you include this library as a dependency in your project, it will automatic
 unless you set `opensearch.liquibase.enabled` to `false`.
 By default, the integration will look for a changelog file at `db/changelog/db.changelog-master.yaml`.
 
+The migration runs during the startup of the application context. Beans which require the migration to have run
+(e.g. because they access indices created by it) must be annotated with
+[`@DependsOnDatabaseInitialization`][DependsOnDatabaseInitialization]; they are then only created after the migration.
+
 Note that the standard Liquibase Spring integration will also be triggered automatically, thus you have to disable it,
 unless you have other databases besides OpenSearch, for which you intend to use Liquibase as normally. To disable it,
 specify the following Spring configuration:
@@ -56,6 +60,7 @@ This project is licensed under the Apache License Version 2.0 - see the [LICENSE
 [opensearch-java-client]: https://docs.opensearch.org/docs/latest/clients/java/
 [`spring-data-opensearch-starter`]: https://github.com/opensearch-project/spring-data-opensearch/tree/main?tab=readme-ov-file#spring-boot-integration
 [properties record]: src/main/java/liquibase/ext/opensearch/integration/spring/SpringLiquibaseOpenSearchProperties.java
+[DependsOnDatabaseInitialization]: https://docs.spring.io/spring-boot/how-to/data-initialization.html#howto.data-initialization.dependencies
 [Spring Boot release cycle]: https://github.com/spring-projects/spring-boot/wiki/Supported-Versions
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
 [LICENSE]: LICENSE

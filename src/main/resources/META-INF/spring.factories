@@ -1,0 +1,3 @@
+# Database Initializer Detectors
+org.springframework.boot.sql.init.dependency.DatabaseInitializerDetector=\
+liquibase.ext.opensearch.integration.spring.SpringLiquibaseOpenSearchDatabaseInitializerDetector
