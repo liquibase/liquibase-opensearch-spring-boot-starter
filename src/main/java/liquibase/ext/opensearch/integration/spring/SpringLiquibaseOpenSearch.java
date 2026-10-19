@@ -80,21 +80,24 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
                     database.setDatabaseChangeLogTableName(this.properties.databaseChangeLogIndex());
                     database.setDatabaseChangeLogLockTableName(this.properties.databaseChangeLogLockIndex());
                     DatabaseFactory.getInstance().register(database);
-                    final var changeLogParameters = new ChangeLogParameters(database);
-                    if (properties.parameters() != null) {
-                        properties.parameters().forEach(changeLogParameters::set);
-                    }
+                    try {
+                        final var changeLogParameters = new ChangeLogParameters(database);
+                        if (properties.parameters() != null) {
+                            properties.parameters().forEach(changeLogParameters::set);
+                        }
 
-                    new CommandScope(UpdateCommandStep.COMMAND_NAME)
-                            .addArgumentValue(ShowSummaryArgument.SHOW_SUMMARY_OUTPUT, UpdateSummaryOutputEnum.LOG)
-                            .addArgumentValue(DbUrlConnectionArgumentsCommandStep.DATABASE_ARG, database)
-                            .addArgumentValue(UpdateCommandStep.CHANGELOG_FILE_ARG, properties.changelogFile())
-                            .addArgumentValue(DatabaseChangelogCommandStep.CHANGELOG_PARAMETERS, changeLogParameters)
-                            .addArgumentValue(UpdateCommandStep.CONTEXTS_ARG, properties.contexts())
-                            .addArgumentValue(UpdateCommandStep.LABEL_FILTER_ARG, properties.labelFilterArgs())
-                            .execute();
-                    connection.close();
-                    database.close();
+                        new CommandScope(UpdateCommandStep.COMMAND_NAME)
+                                .addArgumentValue(ShowSummaryArgument.SHOW_SUMMARY_OUTPUT, UpdateSummaryOutputEnum.LOG)
+                                .addArgumentValue(DbUrlConnectionArgumentsCommandStep.DATABASE_ARG, database)
+                                .addArgumentValue(UpdateCommandStep.CHANGELOG_FILE_ARG, properties.changelogFile())
+                                .addArgumentValue(DatabaseChangelogCommandStep.CHANGELOG_PARAMETERS, changeLogParameters)
+                                .addArgumentValue(UpdateCommandStep.CONTEXTS_ARG, properties.contexts())
+                                .addArgumentValue(UpdateCommandStep.LABEL_FILTER_ARG, properties.labelFilterArgs())
+                                .execute();
+                    } finally {
+                        // also closes the connection, but not the OpenSearch client (which is not owned by it)
+                        database.close();
+                    }
                 });
     }
 

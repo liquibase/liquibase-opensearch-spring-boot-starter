@@ -13,6 +13,10 @@ This project follows the Spring Boot release cycle and thus does *not* adhere to
 * The auto-configuration now backs off if no `OpenSearchClient` bean exists (instead of failing the application startup)
   or if a custom `SpringLiquibaseOpenSearch` bean is defined
 
+### Fixed
+
+* The connection is now also closed if the migration fails
+
 ## [1.1.2] - 2026-10-13
 
 This version is compatible with Spring Boot 4.1.x.
