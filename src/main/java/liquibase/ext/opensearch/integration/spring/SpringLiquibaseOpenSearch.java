@@ -20,7 +20,6 @@ import lombok.Getter;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.liquibase.autoconfigure.LiquibaseProperties;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +32,6 @@ import java.util.Map;
  * Use this with Spring Boot and the provided {@link LiquibaseOpenSearchAutoConfiguration}.
  * </p>
  */
-@Component
 public class SpringLiquibaseOpenSearch implements InitializingBean {
 
     protected final Logger log = Scope.getCurrentScope().getLog(SpringLiquibaseOpenSearch.class);

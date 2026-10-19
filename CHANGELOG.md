@@ -7,6 +7,10 @@ This project follows the Spring Boot release cycle and thus does *not* adhere to
 
 ## [Unreleased] - ReleaseDate
 
+### Changed
+
+* `SpringLiquibaseOpenSearch` is no longer annotated with `@Component`, it is only created by the auto-configuration
+
 ## [1.1.2] - 2026-10-13
 
 This version is compatible with Spring Boot 4.1.x.
