@@ -2,31 +2,14 @@ package liquibase.ext.opensearch.integration.spring;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.opensearch.client.opensearch.OpenSearchClient;
-import org.opensearch.testcontainers.OpenSearchContainer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Testcontainers
 @SpringBootTest
-class SpringLiquibaseOpenSearchIT {
-
-    public static final String OPENSEARCH_DOCKER_IMAGE_NAME = "opensearchproject/opensearch:3.0.0";
-
-    @Container
-    @ServiceConnection
-    protected static OpenSearchContainer<?> container = new OpenSearchContainer<>(DockerImageName.parse(OPENSEARCH_DOCKER_IMAGE_NAME));
-
-    @Autowired
-    private OpenSearchClient openSearchClient;
+class SpringLiquibaseOpenSearchIT extends AbstractOpenSearchIT {
 
     @Test
     void contextLoads() {
@@ -42,9 +25,8 @@ class SpringLiquibaseOpenSearchIT {
     }
 
     @Test
-    @SneakyThrows
     void itRanTheChangelog() {
-        assertTrue(openSearchClient.indices().exists(e -> e.index("testindex")).value());
+        assertTrue(indexExists("testindex"));
     }
 
     @Test
@@ -58,10 +40,9 @@ class SpringLiquibaseOpenSearchIT {
     }
 
     @Test
-    @SneakyThrows
     void itUsesTheDefaultChangelogIndexNames() {
-        assertTrue(openSearchClient.indices().exists(e -> e.index("databasechangelog")).value());
-        assertTrue(openSearchClient.indices().exists(e -> e.index("databasechangeloglock")).value());
+        assertTrue(indexExists("databasechangelog"));
+        assertTrue(indexExists("databasechangeloglock"));
     }
 
 }
