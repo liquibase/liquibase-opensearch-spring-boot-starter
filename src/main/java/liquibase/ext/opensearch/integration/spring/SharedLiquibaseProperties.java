@@ -1,6 +1,8 @@
 package liquibase.ext.opensearch.integration.spring;
 
+import liquibase.ui.UIServiceEnum;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 /**
  * The subset of the properties of the standard Spring Boot Liquibase integration which also apply to this integration.
@@ -13,11 +15,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @param analyticsEnabled Whether to send product usage data and analytics to Liquibase.
  * @param licenseKey       Liquibase Pro license key.
+ * @param uiService        Which UIService to use.
  */
 @ConfigurationProperties("spring.liquibase")
 public record SharedLiquibaseProperties(
         Boolean analyticsEnabled,
 
-        String licenseKey
+        String licenseKey,
+
+        @DefaultValue("logger")
+        UIServiceEnum uiService
 ) {
 }

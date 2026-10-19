@@ -13,8 +13,6 @@ import liquibase.ext.opensearch.database.OpenSearchConnection;
 import liquibase.ext.opensearch.database.OpenSearchLiquibaseDatabase;
 import liquibase.integration.IntegrationDetails;
 import liquibase.logging.Logger;
-import liquibase.ui.UIServiceEnum;
-import lombok.Getter;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -37,9 +35,6 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
     private final SpringLiquibaseOpenSearchProperties properties;
     private final SharedLiquibaseProperties liquibaseProperties;
 
-    @Getter
-    protected UIServiceEnum uiService = UIServiceEnum.LOGGER;
-
     public SpringLiquibaseOpenSearch(final OpenSearchClient openSearchClient, final SpringLiquibaseOpenSearchProperties properties, final SharedLiquibaseProperties liquibaseProperties) {
         this.openSearchClient = openSearchClient;
         this.properties = properties;
@@ -54,7 +49,7 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
         }
 
         final var scopeVars = new HashMap<String, Object>();
-        scopeVars.put(Scope.Attr.ui.name(), this.uiService.getUiServiceClass().getDeclaredConstructor().newInstance());
+        scopeVars.put(Scope.Attr.ui.name(), this.liquibaseProperties.uiService().getUiServiceClass().getDeclaredConstructor().newInstance());
         scopeVars.put(Scope.Attr.integrationDetails.name(), new IntegrationDetails("liquibase-opensearch-spring-boot-starter"));
 
         if (this.liquibaseProperties.analyticsEnabled() != null) {

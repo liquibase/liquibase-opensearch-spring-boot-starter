@@ -10,6 +10,8 @@ This project follows the Spring Boot release cycle and thus does *not* adhere to
 ### Added
 
 * Beans annotated with `@DependsOnDatabaseInitialization` are now only created after the migration has run
+* `spring.liquibase.ui-service` is now supported (as in the standard Liquibase Spring Boot integration). This replaces
+  the non-configurable field `SpringLiquibaseOpenSearch#uiService` (and its getter)
 
 ### Changed
 
