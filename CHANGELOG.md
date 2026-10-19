@@ -23,6 +23,9 @@ This project follows the Spring Boot release cycle and thus does *not* adhere to
 
 ### Fixed
 
+* The jar now contains the Spring Boot configuration metadata (`spring-configuration-metadata.json`), enabling IDE
+  auto-completion and documentation for the `opensearch.liquibase.*` properties. `spring-boot-configuration-processor`
+  is no longer a transitive dependency
 * The connection is now also closed if the migration fails
 * The connection and database are no longer registered globally in Liquibase, which leaked an instance on every
   application context start
