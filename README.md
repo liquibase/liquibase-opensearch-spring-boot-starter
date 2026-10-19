@@ -12,6 +12,8 @@ To use this in your java project, add a dependency to `org.liquibase.ext:liquiba
 
 This starter requires that an [`OpenSearchClient`][opensearch-java-client] is available as a bean. It is generally
 recommended that you use [`spring-data-opensearch-starter`] to create this bean, however you can also provide your own.
+If no `OpenSearchClient` bean exists, the starter does nothing. You can also replace the auto-configured
+`SpringLiquibaseOpenSearch` bean by defining your own.
 
 Unlike `liquibase-opensearch`, this will not attempt to create its own `OpenSearchClient` and consequently it does not
 try to read any OpenSearch connection information from the properties.

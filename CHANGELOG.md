@@ -10,6 +10,8 @@ This project follows the Spring Boot release cycle and thus does *not* adhere to
 ### Changed
 
 * `SpringLiquibaseOpenSearch` is no longer annotated with `@Component`, it is only created by the auto-configuration
+* The auto-configuration now backs off if no `OpenSearchClient` bean exists (instead of failing the application startup)
+  or if a custom `SpringLiquibaseOpenSearch` bean is defined
 
 ## [1.1.2] - 2026-10-13
 
