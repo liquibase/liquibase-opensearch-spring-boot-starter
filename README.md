@@ -26,12 +26,11 @@ The migration runs during the startup of the application context. Beans which re
 (e.g. because they access indices created by it) must be annotated with
 [`@DependsOnDatabaseInitialization`][DependsOnDatabaseInitialization]; they are then only created after the migration.
 
-Note that the standard Liquibase Spring integration will also be triggered automatically, thus you have to disable it,
-unless you have other databases besides OpenSearch, for which you intend to use Liquibase as normally. To disable it,
-specify the following Spring configuration:
-```yaml
-spring.liquibase.enabled=false
-```
+This starter does not depend on the standard Liquibase Spring Boot integration (`spring-boot-liquibase`), and thus does
+not pull in any JDBC dependencies. If your application also uses the standard integration (e.g. for a relational
+database), both run independently of each other.
+The properties `spring.liquibase.analytics-enabled` and `spring.liquibase.license-key` of the standard integration also
+apply to this integration.
 
 See the [properties record] for all supported configuration options.
 

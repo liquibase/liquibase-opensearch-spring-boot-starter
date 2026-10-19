@@ -17,7 +17,6 @@ import liquibase.ui.UIServiceEnum;
 import lombok.Getter;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.liquibase.autoconfigure.LiquibaseProperties;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,12 +36,12 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
     private final OpenSearchClient openSearchClient;
 
     private final SpringLiquibaseOpenSearchProperties properties;
-    private final LiquibaseProperties liquibaseProperties;
+    private final SharedLiquibaseProperties liquibaseProperties;
 
     @Getter
     protected UIServiceEnum uiService = UIServiceEnum.LOGGER;
 
-    public SpringLiquibaseOpenSearch(final OpenSearchClient openSearchClient, final SpringLiquibaseOpenSearchProperties properties, final LiquibaseProperties liquibaseProperties) {
+    public SpringLiquibaseOpenSearch(final OpenSearchClient openSearchClient, final SpringLiquibaseOpenSearchProperties properties, final SharedLiquibaseProperties liquibaseProperties) {
         this.openSearchClient = openSearchClient;
         this.properties = properties;
         this.liquibaseProperties = liquibaseProperties;
@@ -59,14 +58,14 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
         scopeVars.put(Scope.Attr.ui.name(), this.uiService.getUiServiceClass().getDeclaredConstructor().newInstance());
         scopeVars.put(Scope.Attr.integrationDetails.name(), new IntegrationDetails("liquibase-opensearch-spring-boot-starter"));
 
-        if (this.liquibaseProperties.getAnalyticsEnabled() != null) {
-            scopeVars.put(AnalyticsArgs.ENABLED.getKey(), this.liquibaseProperties.getAnalyticsEnabled());
+        if (this.liquibaseProperties.analyticsEnabled() != null) {
+            scopeVars.put(AnalyticsArgs.ENABLED.getKey(), this.liquibaseProperties.analyticsEnabled());
         }
         scopeVars.put(Scope.Attr.maxAnalyticsCacheSize.name(), 10);
 
-        if (this.liquibaseProperties.getLicenseKey() != null) {
+        if (this.liquibaseProperties.licenseKey() != null) {
             log.fine("Using PRO licenseKey.");
-            scopeVars.put("liquibase.licenseKey", this.liquibaseProperties.getLicenseKey());
+            scopeVars.put("liquibase.licenseKey", this.liquibaseProperties.licenseKey());
         }
 
         Scope.child(scopeVars,

@@ -13,6 +13,10 @@ This project follows the Spring Boot release cycle and thus does *not* adhere to
 
 ### Changed
 
+* No longer depends on `spring-boot-starter-liquibase`, which pulled in JDBC dependencies (incl. HikariCP). If your
+  application needs them, declare them explicitly. `spring.liquibase.analytics-enabled` and
+  `spring.liquibase.license-key` are still supported
+  * The constructor of `SpringLiquibaseOpenSearch` now takes `SharedLiquibaseProperties` instead of `LiquibaseProperties`
 * `SpringLiquibaseOpenSearch` is no longer annotated with `@Component`, it is only created by the auto-configuration
 * The auto-configuration now backs off if no `OpenSearchClient` bean exists (instead of failing the application startup)
   or if a custom `SpringLiquibaseOpenSearch` bean is defined
