@@ -19,7 +19,6 @@ import org.opensearch.client.opensearch.OpenSearchClient;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A Spring wrapper around liquibase-opensearch.
@@ -54,7 +53,7 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
             return;
         }
 
-        Map<String, Object> scopeVars = new HashMap<>();
+        final var scopeVars = new HashMap<String, Object>();
         scopeVars.put(Scope.Attr.ui.name(), this.uiService.getUiServiceClass().getDeclaredConstructor().newInstance());
         scopeVars.put(Scope.Attr.integrationDetails.name(), new IntegrationDetails("liquibase-opensearch-spring-boot-starter"));
 

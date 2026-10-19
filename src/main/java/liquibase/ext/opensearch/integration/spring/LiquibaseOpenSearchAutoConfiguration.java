@@ -28,7 +28,7 @@ public class LiquibaseOpenSearchAutoConfiguration {
 
     static class LiquibaseAutoConfigurationRuntimeHints implements RuntimeHintsRegistrar {
         @Override
-        public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+        public void registerHints(final RuntimeHints hints, final ClassLoader classLoader) {
             hints.resources().registerPattern("db/changelog/*");
         }
     }
