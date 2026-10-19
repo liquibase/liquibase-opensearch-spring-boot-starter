@@ -25,6 +25,7 @@ This project follows the Spring Boot release cycle and thus does *not* adhere to
 
 ### Fixed
 
+* Changelog files in subdirectories of `db/changelog` are now also included in GraalVM native images
 * The jar now contains the Spring Boot configuration metadata (`spring-configuration-metadata.json`), enabling IDE
   auto-completion and documentation for the `opensearch.liquibase.*` properties. `spring-boot-configuration-processor`
   is no longer a transitive dependency
