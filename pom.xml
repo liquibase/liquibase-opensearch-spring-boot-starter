@@ -15,7 +15,7 @@
     <packaging>jar</packaging>
 
 
-    <description>Liquibase extension to manage changesets for OpenSearch.</description>
+    <description>Spring Boot starter for liquibase-opensearch, which runs Liquibase changelogs against OpenSearch.</description>
     <url>https://github.com/liquibase/liquibase-opensearch-spring-boot-starter</url>
 
     <licenses>
@@ -35,9 +35,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/liquibase/liquibase-opensearch-springboot-starter.git</connection>
-        <developerConnection>scm:git:ssh://github.com:liquibase/liquibase-opensearch-springboot-starter.git</developerConnection>
-        <url>https://github.com/liquibase/liquibase-opensearch-springboot-starter</url>
+        <connection>scm:git:git://github.com/liquibase/liquibase-opensearch-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:ssh://github.com:liquibase/liquibase-opensearch-spring-boot-starter.git</developerConnection>
+        <url>https://github.com/liquibase/liquibase-opensearch-spring-boot-starter</url>
       <tag>HEAD</tag>
   </scm>
 
