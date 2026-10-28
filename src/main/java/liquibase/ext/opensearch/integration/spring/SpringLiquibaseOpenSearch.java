@@ -9,21 +9,14 @@ import liquibase.command.core.UpdateCommandStep;
 import liquibase.command.core.helpers.DatabaseChangelogCommandStep;
 import liquibase.command.core.helpers.DbUrlConnectionArgumentsCommandStep;
 import liquibase.command.core.helpers.ShowSummaryArgument;
-import liquibase.database.ConnectionServiceFactory;
-import liquibase.database.DatabaseFactory;
 import liquibase.ext.opensearch.database.OpenSearchConnection;
 import liquibase.ext.opensearch.database.OpenSearchLiquibaseDatabase;
 import liquibase.integration.IntegrationDetails;
 import liquibase.logging.Logger;
-import liquibase.ui.UIServiceEnum;
-import lombok.Getter;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.liquibase.autoconfigure.LiquibaseProperties;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A Spring wrapper around liquibase-opensearch.
@@ -33,7 +26,6 @@ import java.util.Map;
  * Use this with Spring Boot and the provided {@link LiquibaseOpenSearchAutoConfiguration}.
  * </p>
  */
-@Component
 public class SpringLiquibaseOpenSearch implements InitializingBean {
 
     protected final Logger log = Scope.getCurrentScope().getLog(SpringLiquibaseOpenSearch.class);
@@ -41,12 +33,9 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
     private final OpenSearchClient openSearchClient;
 
     private final SpringLiquibaseOpenSearchProperties properties;
-    private final LiquibaseProperties liquibaseProperties;
+    private final SharedLiquibaseProperties liquibaseProperties;
 
-    @Getter
-    protected UIServiceEnum uiService = UIServiceEnum.LOGGER;
-
-    public SpringLiquibaseOpenSearch(final OpenSearchClient openSearchClient, final SpringLiquibaseOpenSearchProperties properties, final LiquibaseProperties liquibaseProperties) {
+    public SpringLiquibaseOpenSearch(final OpenSearchClient openSearchClient, final SpringLiquibaseOpenSearchProperties properties, final SharedLiquibaseProperties liquibaseProperties) {
         this.openSearchClient = openSearchClient;
         this.properties = properties;
         this.liquibaseProperties = liquibaseProperties;
@@ -59,44 +48,47 @@ public class SpringLiquibaseOpenSearch implements InitializingBean {
             return;
         }
 
-        Map<String, Object> scopeVars = new HashMap<>();
-        scopeVars.put(Scope.Attr.ui.name(), this.uiService.getUiServiceClass().getDeclaredConstructor().newInstance());
+        final var scopeVars = new HashMap<String, Object>();
+        scopeVars.put(Scope.Attr.ui.name(), this.liquibaseProperties.uiService().getUiServiceClass().getDeclaredConstructor().newInstance());
         scopeVars.put(Scope.Attr.integrationDetails.name(), new IntegrationDetails("liquibase-opensearch-spring-boot-starter"));
 
-        scopeVars.put(AnalyticsArgs.ENABLED.getKey(), this.liquibaseProperties.getAnalyticsEnabled());
+        if (this.liquibaseProperties.analyticsEnabled() != null) {
+            scopeVars.put(AnalyticsArgs.ENABLED.getKey(), this.liquibaseProperties.analyticsEnabled());
+        }
         scopeVars.put(Scope.Attr.maxAnalyticsCacheSize.name(), 10);
 
-        if (this.liquibaseProperties.getLicenseKey() != null) {
+        if (this.liquibaseProperties.licenseKey() != null) {
             log.fine("Using PRO licenseKey.");
-            scopeVars.put("liquibase.licenseKey", this.liquibaseProperties.getLicenseKey());
+            scopeVars.put("liquibase.licenseKey", this.liquibaseProperties.licenseKey());
         }
 
         Scope.child(scopeVars,
                 () -> {
                     // we want to re-use the connection which spring-data-opensearch (or somebody else) already constructed
-                    // => do not rely on liquibase' standard mechanism of constructing a new connection, instead we force it to take our own.
+                    // => do not rely on liquibase' standard mechanism of constructing a new connection, instead we pass our own database.
                     final var connection = new OpenSearchConnection(openSearchClient);
-                    ConnectionServiceFactory.getInstance().register(connection);
                     final var database = new OpenSearchLiquibaseDatabase();
                     database.setConnection(connection);
                     database.setDatabaseChangeLogTableName(this.properties.databaseChangeLogIndex());
                     database.setDatabaseChangeLogLockTableName(this.properties.databaseChangeLogLockIndex());
-                    DatabaseFactory.getInstance().register(database);
-                    final var changeLogParameters = new ChangeLogParameters(database);
-                    if (properties.parameters() != null) {
-                        properties.parameters().forEach(changeLogParameters::set);
-                    }
+                    try {
+                        final var changeLogParameters = new ChangeLogParameters(database);
+                        if (properties.parameters() != null) {
+                            properties.parameters().forEach(changeLogParameters::set);
+                        }
 
-                    new CommandScope(UpdateCommandStep.COMMAND_NAME)
-                            .addArgumentValue(ShowSummaryArgument.SHOW_SUMMARY_OUTPUT, UpdateSummaryOutputEnum.LOG)
-                            .addArgumentValue(DbUrlConnectionArgumentsCommandStep.DATABASE_ARG, database)
-                            .addArgumentValue(UpdateCommandStep.CHANGELOG_FILE_ARG, properties.changelogFile())
-                            .addArgumentValue(DatabaseChangelogCommandStep.CHANGELOG_PARAMETERS, changeLogParameters)
-                            .addArgumentValue(UpdateCommandStep.CONTEXTS_ARG, properties.contexts())
-                            .addArgumentValue(UpdateCommandStep.LABEL_FILTER_ARG, properties.labelFilterArgs())
-                            .execute();
-                    connection.close();
-                    database.close();
+                        new CommandScope(UpdateCommandStep.COMMAND_NAME)
+                                .addArgumentValue(ShowSummaryArgument.SHOW_SUMMARY_OUTPUT, UpdateSummaryOutputEnum.LOG)
+                                .addArgumentValue(DbUrlConnectionArgumentsCommandStep.DATABASE_ARG, database)
+                                .addArgumentValue(UpdateCommandStep.CHANGELOG_FILE_ARG, properties.changelogFile())
+                                .addArgumentValue(DatabaseChangelogCommandStep.CHANGELOG_PARAMETERS, changeLogParameters)
+                                .addArgumentValue(UpdateCommandStep.CONTEXTS_ARG, properties.contexts())
+                                .addArgumentValue(UpdateCommandStep.LABEL_FILTER_ARG, properties.labelFilterArgs())
+                                .execute();
+                    } finally {
+                        // also closes the connection, but not the OpenSearch client (which is not owned by it)
+                        database.close();
+                    }
                 });
     }
 

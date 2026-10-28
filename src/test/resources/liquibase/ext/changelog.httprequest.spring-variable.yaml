@@ -8,7 +8,7 @@ databaseChangeLog:
       changes:
         - httpRequest:
             method: PUT
-            path: /testindex
+            path: /${test-index}
             body: >
               {
                 "mappings": {
@@ -21,7 +21,7 @@ databaseChangeLog:
               }
         - httpRequest:
             method: PUT
-            path: /testindex/_doc/testdoc?refresh=true
+            path: /${test-index}/_doc/testdoc?refresh=true
             body: >
               {
                 "testfield": "${test-value}"

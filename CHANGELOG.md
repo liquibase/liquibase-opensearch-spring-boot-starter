@@ -1,10 +1,37 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+This project follows the Spring Boot release cycle and thus does *not* adhere to
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html), see the [README](README.md#versioning) for details.
 
 ## [Unreleased] - ReleaseDate
+
+### Added
+
+* Beans annotated with `@DependsOnDatabaseInitialization` are now only created after the migration has run
+* `spring.liquibase.ui-service` is now supported (as in the standard Liquibase Spring Boot integration). This replaces
+  the non-configurable field `SpringLiquibaseOpenSearch#uiService` (and its getter)
+
+### Changed
+
+* No longer depends on `spring-boot-starter-liquibase`, which pulled in JDBC dependencies (incl. HikariCP). If your
+  application needs them, declare them explicitly. `spring.liquibase.analytics-enabled` and
+  `spring.liquibase.license-key` are still supported
+  * The constructor of `SpringLiquibaseOpenSearch` now takes `SharedLiquibaseProperties` instead of `LiquibaseProperties`
+* `SpringLiquibaseOpenSearch` is no longer annotated with `@Component`, it is only created by the auto-configuration
+* The auto-configuration now backs off if no `OpenSearchClient` bean exists (instead of failing the application startup)
+  or if a custom `SpringLiquibaseOpenSearch` bean is defined
+
+### Fixed
+
+* Changelog files in subdirectories of `db/changelog` are now also included in GraalVM native images
+* The jar now contains the Spring Boot configuration metadata (`spring-configuration-metadata.json`), enabling IDE
+  auto-completion and documentation for the `opensearch.liquibase.*` properties. `spring-boot-configuration-processor`
+  is no longer a transitive dependency
+* The connection is now also closed if the migration fails
+* The connection and database are no longer registered globally in Liquibase, which leaked an instance on every
+  application context start
 
 ## [1.1.2] - 2026-10-13
 

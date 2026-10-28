@@ -7,7 +7,7 @@ import org.springframework.boot.data.elasticsearch.autoconfigure.DataElasticsear
 @SpringBootApplication(exclude = DataElasticsearchAutoConfiguration.class)
 public class SpringTestApplication {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(SpringTestApplication.class, args);
     }
 

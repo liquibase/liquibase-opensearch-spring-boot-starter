@@ -12,6 +12,8 @@ To use this in your java project, add a dependency to `org.liquibase.ext:liquiba
 
 This starter requires that an [`OpenSearchClient`][opensearch-java-client] is available as a bean. It is generally
 recommended that you use [`spring-data-opensearch-starter`] to create this bean, however you can also provide your own.
+If no `OpenSearchClient` bean exists, the starter does nothing. You can also replace the auto-configured
+`SpringLiquibaseOpenSearch` bean by defining your own.
 
 Unlike `liquibase-opensearch`, this will not attempt to create its own `OpenSearchClient` and consequently it does not
 try to read any OpenSearch connection information from the properties.
@@ -20,12 +22,15 @@ Once you include this library as a dependency in your project, it will automatic
 unless you set `opensearch.liquibase.enabled` to `false`.
 By default, the integration will look for a changelog file at `db/changelog/db.changelog-master.yaml`.
 
-Note that the standard Liquibase Spring integration will also be triggered automatically, thus you have to disable it,
-unless you have other databases besides OpenSearch, for which you intend to use Liquibase as normally. To disable it,
-specify the following Spring configuration:
-```yaml
-spring.liquibase.enabled=false
-```
+The migration runs during the startup of the application context. Beans which require the migration to have run
+(e.g. because they access indices created by it) must be annotated with
+[`@DependsOnDatabaseInitialization`][DependsOnDatabaseInitialization]; they are then only created after the migration.
+
+This starter does not depend on the standard Liquibase Spring Boot integration (`spring-boot-liquibase`), and thus does
+not pull in any JDBC dependencies. If your application also uses the standard integration (e.g. for a relational
+database), both run independently of each other.
+The properties `spring.liquibase.analytics-enabled`, `spring.liquibase.license-key` and `spring.liquibase.ui-service` of
+the standard integration also apply to this integration.
 
 See the [properties record] for all supported configuration options.
 
@@ -54,6 +59,7 @@ This project is licensed under the Apache License Version 2.0 - see the [LICENSE
 [opensearch-java-client]: https://docs.opensearch.org/docs/latest/clients/java/
 [`spring-data-opensearch-starter`]: https://github.com/opensearch-project/spring-data-opensearch/tree/main?tab=readme-ov-file#spring-boot-integration
 [properties record]: src/main/java/liquibase/ext/opensearch/integration/spring/SpringLiquibaseOpenSearchProperties.java
+[DependsOnDatabaseInitialization]: https://docs.spring.io/spring-boot/how-to/data-initialization.html#howto.data-initialization.dependencies
 [Spring Boot release cycle]: https://github.com/spring-projects/spring-boot/wiki/Supported-Versions
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
 [LICENSE]: LICENSE

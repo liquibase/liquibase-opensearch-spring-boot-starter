@@ -15,7 +15,7 @@
     <packaging>jar</packaging>
 
 
-    <description>Liquibase extension to manage changesets for OpenSearch.</description>
+    <description>Spring Boot starter for liquibase-opensearch, which runs Liquibase changelogs against OpenSearch.</description>
     <url>https://github.com/liquibase/liquibase-opensearch-spring-boot-starter</url>
 
     <licenses>
@@ -35,9 +35,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/liquibase/liquibase-opensearch-springboot-starter.git</connection>
-        <developerConnection>scm:git:ssh://github.com:liquibase/liquibase-opensearch-springboot-starter.git</developerConnection>
-        <url>https://github.com/liquibase/liquibase-opensearch-springboot-starter</url>
+        <connection>scm:git:git://github.com/liquibase/liquibase-opensearch-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:ssh://github.com:liquibase/liquibase-opensearch-spring-boot-starter.git</developerConnection>
+        <url>https://github.com/liquibase/liquibase-opensearch-spring-boot-starter</url>
       <tag>HEAD</tag>
   </scm>
 
@@ -45,8 +45,7 @@
         <liquibase.version>5.0.4</liquibase.version>
         <spring-boot.version>4.1.2</spring-boot.version>
         <spring-data-opensearch.version>3.1.2</spring-data-opensearch.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         <sonar.organization>liquibase</sonar.organization>
         <sonar.projectKey>${sonar.organization}_${project.artifactId}</sonar.projectKey>
         <sonar.projectName>${project.name}</sonar.projectName>
@@ -57,6 +56,18 @@
         <sonar.sources>src/main/java</sonar.sources>
         <sonar.tests>src/test/java</sonar.tests>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -87,30 +98,26 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-liquibase</artifactId>
-            <version>${spring-boot.version}</version>
+            <artifactId>spring-boot-liquibase</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>${spring-boot.version}</version>
+            <artifactId>spring-boot-sql</artifactId>
         </dependency>
 
         <!-- tests -->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>2.0.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>1.21.4</version>
+            <artifactId>testcontainers-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -170,19 +177,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-testcontainers</artifactId>
-            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -199,6 +203,22 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <!-- append to the processors configured in the parent POM (Lombok) -->
+                    <annotationProcessorPaths combine.children="append">
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </path>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-autoconfigure-processor</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
