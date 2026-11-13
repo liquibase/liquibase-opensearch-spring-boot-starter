@@ -20,7 +20,7 @@ jobs:
     uses: liquibase/build-logic/.github/workflows/os-extension-test.yml@main
     secrets: inherit
     with:
-      java: "[ 21 ]"
+      java: "[ 21, 25 ]"
       javaBuildVersion: 21
       # The integration tests start OpenSearch via testcontainers, which needs a
       # Docker daemon. GitHub's windows-latest runners have none, so every IT
